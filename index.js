@@ -4,6 +4,7 @@ var mustacheExpress = require('mustache-express');
 var bodyParser = require('body-parser');
 
 var Game = require('./game');
+var Action = require('./action');
 
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
@@ -41,7 +42,9 @@ app.get('/games', function(req, res) {
 });
 
 app.get('/games/:id/actions', function(req, res) {
-
+  Action.allForGame(req.params.id, function(results) {
+    res.json(results);
+  });
 });
 
 var server = app.listen(8080, function() {
