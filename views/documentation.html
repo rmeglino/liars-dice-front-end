@@ -1,0 +1,25 @@
+<html>
+  <body>
+  <h1>Liar's Dice Service Documentation</h1>
+
+    <h3>Start a game</h3>
+    <dl>
+      <dt>Params</dt><dd>number (number of players)</dd>
+    </dl>
+
+    <h3>Make a move</h3>
+    <p>Player put X number of dice with face Y onto the board.</p>
+    <code>
+      PUT /move
+    </code>
+
+    <h3>Challenge: Determine if a claim is accurate</h3>
+    <dl>
+      <dt>Params</dt><dd>number (of dice), face (1-6)</dd>
+      <dt>Return</dt><dd>True if the number of dice with face exists. False otherwise</dd>
+    </dl>
+    <code>
+      PUT /challenge
+    </code>
+  </body>
+</html>
