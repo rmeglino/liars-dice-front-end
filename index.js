@@ -12,15 +12,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', function(req, res) {
-  res.render('documentation', {
-
-  });
+  res.render('documentation', {});
 });
 
 app.post('/games', function(req, res, next) {
-  console.log(req.body);
-
-
   var game = new Game(req.body);
   game.save(function(errors) {
     if (errors) {
@@ -37,6 +32,12 @@ app.post('/games/:id/claim', function(req, res) {
 
 app.post('/games/:id/challenge', function(req, res) {
 
+});
+
+app.get('/games', function(req, res) {
+  Game.all(function(results) {
+    res.json(results);
+  });
 });
 
 app.get('/games/:id/actions', function(req, res) {

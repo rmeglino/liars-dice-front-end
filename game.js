@@ -4,10 +4,18 @@ var db = new sqlite3.Database(':memory:');
 db.run("CREATE TABLE games (id INTEGER PRIMARY KEY autoincrement NOT NULL, num_players INT NOT NULL, num_dice INT NOT NULL)");
 
 var Game = function(options) {
-  console.log(options)
   this.num_players = options.num_players;
   this.num_dice = options.num_dice;
   this.id = null;
+}
+
+Game.all = function(cb) {
+  var results = [];
+  db.each("SELECT * FROM games", function(error, row) {
+    results.unshift(row);
+  }, function() {
+    cb(results);
+  });
 }
 
 Game.prototype = {
@@ -21,7 +29,7 @@ Game.prototype = {
 
   create: function(cb) {
     var self = this;
-    
+
     if (!this.num_players || !this.num_dice) {
       cb({
         error: "num_players and num_dice is required"
