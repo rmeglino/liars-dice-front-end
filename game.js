@@ -1,8 +1,21 @@
 var Datastore = require('nedb')
   , db = new Datastore();
 
+var Die = require("./helpers/die");
+
+
+/*
+  Fields needed to create a new game:
+  numPlayers (Integer)
+  numDice (Integer)
+ */
 var Game = function(options) {
-  this.attributes = options;
+  this.document = options;
+  this.document.playerHands = [];
+  this.document.board = [];
+  this.document.actions = [];
+
+  this.createPlayers();
 }
 
 Game.all = function(cb) {
@@ -10,39 +23,56 @@ Game.all = function(cb) {
   db.find({}, function (err, docs) {
     cb(docs);
   });
-}
+};
+
+Game.find = function(_id, cb) {
+  db.findOne({_id: _id}, function(error, game) {
+    cb(new Game(game));
+  });
+};
 
 Game.prototype = {
   save: function(callback) {
-    if (this.id == null) {
+    if (this.document._id == null) {
       this.create(callback);
     } else {
-      this.update();
+      this.update(callback);
     }
   },
 
   create: function(cb) {
     var self = this;
 
-    if (!this.attributes.num_players || !this.attributes.num_dice) {
+    if (!this.document.numPlayers || !this.document.numDice) {
       cb({
-        error: "num_players and num_dice is required"
+        error: "numPlayers and numDice is required"
       })
       return;
     }
 
-    db.insert(this.attributes, function(error, newDoc) {
+    db.insert(this.document, function(error, newDoc) {
       if (error) {
         cb(error);
       } else {
-        self.attributes._id = newDoc._id;
+        self.document._id = newDoc._id;
         cb();
       }
     });
   },
 
-  update: function() {
+  update: function(cb) {
+    db.update({_id: this.document._id}, this.document, {}, function() {
+      cb();
+    });
+  },
 
+  createPlayers: function() {
+    for(var i=0; i < this.document.numPlayers; i++) {
+      this.document.playerHands[i] = [];
+      for(var j=0; j < this.document.numDice; j++) {
+        this.document.playerHands[i][j] = Die.randomFace();
+      }
+    }
   }
 }
 

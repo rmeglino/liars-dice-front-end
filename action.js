@@ -1,33 +1,65 @@
-var Action = function(options) {
-  this.action_type = options.action_type;
-  this.game_id = options.game_id;
-  this.id = null;
-}
+var Action = function() {}
 
-Action.allForGame = function(game_id, cb) {
-  var results = [];
-  db.each("SELECT * FROM actions where game_id="+game_id, function(error, row) {
-    results.unshift(row);
-  }, function() {
-    cb(results);
-  });
-}
+Action.removeDice = function(game, num, face, player) {
+  var numberInHand = this.numberInHand(game.document.playerHands[player], face);
 
-Action.prototype = {
+  if (numberInHand < num) {
+    return {
+      error: "Dice not in hand"
+    }
+  }
+  // Now assume all is peaches
 
-  save: function(cb) {
-    var self = this;
+  // can't use filter as we need to remove the "num" instead of all
+  for(var i=0; i<num; i++) {
+    var index = game.document.playerHands[player].indexOf(face);
+    if (index > -1) {
+      game.document.playerHands[player].splice(index, 1);  
+      game.document.board.unshift(face);
+    }
+  }
+  return {};
+};
 
-    var stmt = "INSERT INTO actions (action_type, game_id) VALUES (\""+this.action_type+"\", "+this.game_id+")";
-    var response = db.run(stmt, function(error) {
-      if (error) {
-        cb(error);
-      } else {
-        self.id = this.lastID;
+Action.add = function(game, action, cb) {
+  game.document.actions.unshift(action);
+
+  if (action.actionType == "claim") {
+    // need to move the dice from player to board;
+    var result = this.removeDice(game, action.moveNumber, action.moveFace, action.player);
+    if (result.errors) {
+      cb(result);
+    } else {
+      game.save(function() {
         cb();
-      }
+      });
+    }
+  } else if (action.actionType == "challenge") {
+    var result = this.challenge(game, action.challengeNumber, action.challengeFace);
+    game.save(function() {
+      cb(result);
     });
-  },
+  }
+};
+
+Action.challenge = function(game, num, face) {
+  var self = this;
+  // add up all of face in all hands and board
+  var inPlayerHands = game.playerHands.reduce(function(accumulator, currentPlayerHand) {
+    accumulator += self.numberInHand(current, face);
+  }, 0);
+
+  var total = inPlayerHands + this.numberInHand(game.board, face);
+
+  return total <= num;
+};
+
+Action.numberInHand = function(hand, face) {
+  return hand.reduce(function(accumulator, current) {
+    if (current == face) {
+      accumulator += 1;
+    }
+  }, 0);
 }
 
 module.exports = Action;
