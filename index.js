@@ -65,15 +65,17 @@ app.post('/games/:id/challenge', function(req, res) {
   });
 });
 
+/* List all the games */
 app.get('/games', function(req, res) {
   Game.all(function(results) {
     res.json(results);
   });
 });
 
-app.get('/games/:id/actions', function(req, res) {
-  Action.allForGame(req.params.id, function(results) {
-    res.json(results);
+/* Get one game by id */
+app.get('/games/:id', function(req, res) {
+  Game.find(req.params.id, function(game) {
+    res.json(game.document);
   });
 });
 
