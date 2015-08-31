@@ -27,6 +27,9 @@ app.post('/games', function(req, res, next) {
   });
 });
 
+/*
+  This end point is used to make a move.
+ */
 app.post('/games/:id/claim', function(req, res) {
 
 });

@@ -9,10 +9,10 @@
   "author": "Jonathan Spies <jonathan.spies@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "~1.13.2",
     "express": "^4.13.3",
     "mustache": "latest",
     "mustache-express": "latest",
-    "sqlite3": "latest",
-    "body-parser": "~1.13.2"
+    "nedb": "^1.1.3"
   }
 }

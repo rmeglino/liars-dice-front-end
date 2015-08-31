@@ -1,8 +1,3 @@
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
-
-db.run("CREATE TABLE actions (id INTEGER PRIMARY KEY autoincrement NOT NULL, game_id INT NOT NULL, action_type string)");
-
 var Action = function(options) {
   this.action_type = options.action_type;
   this.game_id = options.game_id;

@@ -1,20 +1,14 @@
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
-
-db.run("CREATE TABLE games (id INTEGER PRIMARY KEY autoincrement NOT NULL, num_players INT NOT NULL, num_dice INT NOT NULL)");
+var Datastore = require('nedb')
+  , db = new Datastore();
 
 var Game = function(options) {
-  this.num_players = options.num_players;
-  this.num_dice = options.num_dice;
-  this.id = null;
+  this.attributes = options;
 }
 
 Game.all = function(cb) {
   var results = [];
-  db.each("SELECT * FROM games", function(error, row) {
-    results.unshift(row);
-  }, function() {
-    cb(results);
+  db.find({}, function (err, docs) {
+    cb(docs);
   });
 }
 
@@ -30,19 +24,18 @@ Game.prototype = {
   create: function(cb) {
     var self = this;
 
-    if (!this.num_players || !this.num_dice) {
+    if (!this.attributes.num_players || !this.attributes.num_dice) {
       cb({
         error: "num_players and num_dice is required"
       })
       return;
     }
 
-    var stmt = "INSERT INTO games (num_players, num_dice) VALUES ("+this.num_players+", "+this.num_dice+")";
-    var response = db.run(stmt, function(error) {
+    db.insert(this.attributes, function(error, newDoc) {
       if (error) {
         cb(error);
       } else {
-        self.id = this.lastID;
+        self.attributes._id = newDoc._id;
         cb();
       }
     });
