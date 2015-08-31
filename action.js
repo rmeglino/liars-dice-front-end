@@ -42,23 +42,35 @@ Action.add = function(game, action, cb) {
   }
 };
 
-Action.challenge = function(game, num, face) {
+Action.challenge = function(game) {
   var self = this;
+
+  // first get last claim
+  game.document.actions.sort(function(a, b) {
+    if (a.actionType == "challenge") return 1;
+    if (b.actionType == "challenge") return -1;
+    return a.claimNumber > b.claimNumber ? -1 : (b.claimNumber > a.claimNumber ? 1 : 0);
+  });
+  
+  var face = game.document.actions[0].claimFace;
+  var num = game.document.actions[0].claimNumber;
+
   // add up all of face in all hands and board
-  var inPlayerHands = game.playerHands.reduce(function(accumulator, currentPlayerHand) {
-    accumulator += self.numberInHand(current, face);
+  var inPlayerHands = game.document.playerHands.reduce(function(accumulator, currentPlayerHand) {
+    return accumulator + self.numberInHand(currentPlayerHand, face);
   }, 0);
 
-  var total = inPlayerHands + this.numberInHand(game.board, face);
+  var total = inPlayerHands + this.numberInHand(game.document.board, face);
 
-  return total <= num;
+  return total >= num;
 };
 
 Action.numberInHand = function(hand, face) {
   return hand.reduce(function(accumulator, current) {
     if (current == face) {
-      accumulator += 1;
+      return accumulator + 1;
     }
+    return accumulator;
   }, 0);
 }
 

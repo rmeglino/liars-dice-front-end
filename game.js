@@ -11,11 +11,14 @@ var Die = require("./helpers/die");
  */
 var Game = function(options) {
   this.document = options;
-  this.document.playerHands = [];
-  this.document.board = [];
-  this.document.actions = [];
+  
+  if (!this.document.board) this.document.board = [];
+  if (!this.document.actions) this.document.actions = [];
 
-  this.createPlayers();
+  if (!this.document.playerHands) {
+    this.document.playerHands = [];
+    this.createPlayers();
+  }
 }
 
 Game.all = function(cb) {

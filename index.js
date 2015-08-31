@@ -22,7 +22,7 @@ app.post('/games', function(req, res, next) {
     if (errors) {
       res.json(errors);
     } else {
-      res.json(game);  
+      res.json(game.document);  
     }
   });
 });
@@ -39,29 +39,28 @@ app.post('/games', function(req, res, next) {
   moveFace: (Integer) the face of the die moved onto the board
  */
 app.post('/games/:id/claim', function(req, res) {
-  Game.find(req.body._id, function(game) {
+  Game.find(req.params.id, function(game) {
     Action.add(game, {
       actionType: "claim",
-      claimNumber: req.body.claimNumber,
-      claimFace: req.body.claimFace,
-      player: req.body.player,
-      moveFace: req.body.moveFace,
-      moveNumber: req.body.moveNumber,
+      claimNumber: parseInt(req.body.claimNumber),
+      claimFace: parseInt(req.body.claimFace),
+      player: parseInt(req.body.player),
+      moveFace: parseInt(req.body.moveFace),
+      moveNumber: parseInt(req.body.moveNumber),
     }, function() {
       res.json(game);
     });
   });
 });
 
+/* this endpoint returns true or false based on whether the last claim exists */
 app.post('/games/:id/challenge', function(req, res) {
-  Game.find(id, function(game) {
+  Game.find(req.params.id, function(game) {
     Action.add(game, {
       actionType: "challenge",
-      player: req.body.player,
-      challengeFace: req.body.challengeFace,
-      challengeNumber: req.body.challengeNumber,
-    }, function() {
-      res.json(game);
+      player: req.body.player
+    }, function(result) {
+      res.json(result);
     });
   });
 });
