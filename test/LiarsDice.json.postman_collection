@@ -6,7 +6,8 @@
 		"9d1b0105-f95f-2119-5359-2f59c52ccdee",
 		"f994ca6d-0d7f-be43-1680-df580e004172",
 		"68dee9ed-6eaf-a98d-8709-aa833b705909",
-		"d143424b-37cc-d3e5-b9bf-445d0110e7af"
+		"d143424b-37cc-d3e5-b9bf-445d0110e7af",
+		"7e8fb6dd-23c7-fbd1-63a5-342dd4c0f8da"
 	],
 	"folders": [],
 	"timestamp": 1440944367313,
@@ -33,6 +34,27 @@
 			"collectionId": "085fbd73-dbb7-a6c0-62f2-dddc97c0f189",
 			"responses": [],
 			"rawModeData": "{\n    \"player\": 1,\n    \"moveNumber\": 1,\n    \"claimNumber\": 1,\n    \"claimFace\": \"{{claim1}}\",\n    \"moveFace\": \"{{claim1}}\"\n}"
+		},
+		{
+			"id": "7e8fb6dd-23c7-fbd1-63a5-342dd4c0f8da",
+			"headers": "",
+			"url": "http://localhost:8080/games/{{game_id}}",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "085fbd73-dbb7-a6c0-62f2-dddc97c0f189",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Get Game",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1441029892325,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
 		},
 		{
 			"id": "9d1b0105-f95f-2119-5359-2f59c52ccdee",
