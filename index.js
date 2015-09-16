@@ -11,6 +11,8 @@ app.set('view engine', 'html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Host front end app static files...
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
   res.render('documentation', {});
@@ -22,7 +24,7 @@ app.post('/games', function(req, res, next) {
     if (errors) {
       res.json(errors);
     } else {
-      res.json(game.document);  
+      res.json(game.document);
     }
   });
 });
