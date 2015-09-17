@@ -1,7 +1,26 @@
-## Liars Dice Backend
-#### A simple imperfect node backend for UI engineer interviews
+## Liars Dice Web App
+#### A simple imperfect node backend + Angular skeleton for UI engineer interviews
 
-## Setting up
+###Liar's Dice
+
+In the game Liar's Dice, each player begins the game with 5 dice, hidden from the other players.  Every player rolls the dice and hides the result. The first player puts X(ex. 0 to 5) number of dice in the middle and declares how many dice of a certain number exist amongst all the dice in play. For example, if he puts out 3 4s and says "There are at least 10 4s", then he believes there are 10 4's across everyone's hand including the 3 dice in the middle.
+
+After a player places dice on the board and makes a bid(note: the player doesn't have to place any dice on the board, they can just make a bid), he/she must reroll the remaining dice in their hand.
+
+The next player must either challenge the previous player's claim, or make a new claim that is at least one die higher (it can be an different number is the player chooses). For example, "There are at least 11 4s" or "There are at least 11 3s".
+
+###The Exercise
+
+Write a JavaScript front end application for playing a game of Liar's Dice!
+
+The game should allow the user to:
+
+* Start a new game, specifying the number of players and number of dice per player.
+* See the current state of the game (including player's turn, number of dice, etc.)
+* Move dice to the middle, claim a number of dice in hand, or challenge the last player's claim
+* See all moves taken by players in the game
+
+## Setting up the app
 
 1. Clone the repository locally
 2. Make sure you have Node installed (https://nodejs.org/download/)
@@ -10,7 +29,11 @@
 
 The server will run on localhost:8080
 
-## See it in action
+## Front end skeleton
+
+A bare-bones HTML page that loads a bare-bones Angular app and displays a stubbed game is included in the /public folder of the repository. Please place your developed application in this repository.
+
+## Verifying backend API
 
 There is a Postman collection included test/LiarsDice.json.postman_collection. This file can be loaded into the Chrome app, Postman and demonstrates usage of all the endpoints.
 
@@ -55,3 +78,9 @@ Challenge the last move
 POST /games/:id/challenge
   player: Integer
 ```
+
+##Submission
+
+The final submission or any questions related to the excercise should be sent to recruiting@bypassmobile.com
+
+Thanks!
