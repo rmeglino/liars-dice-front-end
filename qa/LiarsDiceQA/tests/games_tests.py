@@ -12,8 +12,17 @@ class Test01Games(unittest.TestCase):
         resp_object = resp.json()
         Test01Games.numExistingGames = len(resp_object)
 
-    # Next, create a game
+    # try to create a game without payload
     def test0(self):
+        payload = {}
+        url = api.get_url("/games")
+        resp = api.post(url, payload)
+        self.assertEqual(resp.status_code, 200)
+        resp_obj = resp.json()
+        self.assertEqual(resp_obj.get("error", None), "numPlayers and numDice is required")
+
+    # Next, create a game for real
+    def test1(self):
         payload = {"numPlayers": numPlayers, "numDice": numDice}
         resp = api.games(payload=payload)
         self.assertEqual(resp.status_code, 200)
@@ -26,9 +35,8 @@ class Test01Games(unittest.TestCase):
         for hand in resp_object.get("playerHands", None):
             self.assertEqual(len(hand), numDice)
 
-
     # Now, test that the game exists
-    def test1(self):
+    def test2(self):
         resp = api.games()
         self.assertEqual(resp.status_code, 200)
         resp_object = resp.json()
