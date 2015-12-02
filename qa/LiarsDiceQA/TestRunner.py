@@ -4,12 +4,8 @@ import StringIO
 from utils import HTMLTestRunner
 import tests
 
-class TestLiarsDice(unittest.TestCase):
 
-    def mytest(self):
-        for name, obj in inspect.getmembers(tests):
-            if inspect.isclass(obj):
-                print name
+class TestLiarsDice(unittest.TestCase):
 
     def runTest(self):
         testcases = []
