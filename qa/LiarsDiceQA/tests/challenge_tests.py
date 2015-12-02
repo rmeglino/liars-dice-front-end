@@ -4,6 +4,7 @@ from utils import LiarsDiceApi
 from base import BaseTest
 
 class Test03Challenge(BaseTest):
+    # test proper usage
     def testClaim0(self):
         # get the game
         game = self.api.games(game_id=self.game_id)
