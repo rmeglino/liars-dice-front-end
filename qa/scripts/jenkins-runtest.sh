@@ -20,7 +20,7 @@ if [ `ps -efw | grep -v grep | grep -c $PID` -ne 1 ];then
     exit 1
 fi
 
-python qa/tests/tests.py
+python qa/LiarsDiceQA/TestRunner.py
 EXIT_STATUS=$?
 
 kill $PID
