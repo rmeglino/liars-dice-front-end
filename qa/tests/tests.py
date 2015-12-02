@@ -29,7 +29,7 @@ class TestGames(unittest.TestCase):
         self.assertIsNotNone(resp_object.get("playerHands", None))
         self.assertEqual(len(resp_object['playerHands']), numPlayers)
         for hand in resp_object.get("playerHands", None):
-            self.assertEqual(len[hand], numDice)
+            self.assertEqual(len(hand), numDice)
 
 
     # Now, test that the game exists
@@ -42,10 +42,10 @@ class TestGames(unittest.TestCase):
         self.assertIsNone(game.get("error", None))
         self.assertEqual(game.get("numPlayers", None), numPlayers)
         self.assertEqual(game.get("numDice", None), numDice)
-        self.assertIsNotNone(resp_object.get("playerHands", None))
-        self.assertEqual(len(resp_object['playerHands']), numPlayers)
-        for hand in resp_object.get("playerHands", None):
-            self.assertEqual(len[hand], numDice)
+        self.assertIsNotNone(game.get("playerHands", None))
+        self.assertEqual(len(game['playerHands']), numPlayers)
+        for hand in game.get("playerHands", None):
+            self.assertEqual(len(hand), numDice)
 
 
 class TestLiarsDice(unittest.TestCase):

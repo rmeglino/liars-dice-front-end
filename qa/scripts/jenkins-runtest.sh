@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -x
 
 if [ ! -d ../virtualenv ]; then
     virtualenv ../virtualenv
@@ -15,6 +15,10 @@ fi
 
 node index.js &
 PID=$!
+sleep 1
+if [ `ps -efw | grep -v grep | grep -c $PID` -ne 1 ];then
+    exit 1
+fi
 
 python qa/tests/tests.py
 EXIT_STATUS=$?
