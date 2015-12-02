@@ -1,0 +1,37 @@
+
+
+# new game
+curl -H "Content-Type: application/json" -d '{"numDice": 5, "numPlayers": 4}' -X POST "http://localhost:8080/games"
+
+
+#claim 
+curl -H "Content-Type: application/json" -d '{"player": 1, "moveNumber": 1, "claimNumber": 1, "claimFace": "{{claim1}}", "moveFace": "{{claim1}}"}' -X POST "http://localhost:8080/games/{{game_id}}/claim"
+
+
+curl -H "Content-Type: application/json" -d '{"player": 1, "moveNumber": 1, "claimNumber": 1, "claimFace": "3", "moveFace": "2"}' -X POST "http://localhost:8080/games/4OBP9PSu5F2uKI0j/claim"
+
+#challange
+curl -H "Content-Type: application/json" -d '{"player": 2}' "http://localhost:8080/games/4OBP9PSu5F2uKI0j/challenge"
+
+tests
+
+get games
+ - before new game creation creation
+ - after new game creation creation
+
+new game creation
+ - new id is created
+ - correct number of players and dice are created.
+
+claim
+ - correct claim
+  - moves were made correctly
+  - claim was recorded corrrectly
+ - incorrect claim
+  - nothing should change
+
+challange
+ - challange should return true if the claim made was correct and false if the claim made was incorrect.
+
+
+ [{u'playerHands': [[4, 1, 6, 2, 1], [6, 3, 6, 4, 5], [3, 2, 5, 3, 3], [3, 5, 4, 5, 2]], u'numPlayers': 4, u'actions': [], u'board': [], u'numDice': 5, u'_id': u'1wzNMIIBb9dFb0Sh'}]
