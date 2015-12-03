@@ -83,26 +83,26 @@ class Test02Claims(BaseTest):
         # then should fail
         self.assertEqual(resp.status_code, 404)
 
-    ## this test crashes the system - a defect report should be written up on this
-    # def test3(self):
-    #     # given
-    #     # gameId = defined
-    #     # player = missing
-    #     # moveNumber = numberInHand
-    #     # moveFace = presentInHand
-    #     # claimNumber = defined
-    #     # claimFace = 1-6
-    #
-    #     game_id = self.game_id
-    #     payload = {"moveFace": self.moveFace, "moveNumber": self.moveNumber,
-    #                "claimFace": self.moveFace, "claimNumber": self.moveNumber + 10}
-    #     # when
-    #     resp = self.api.claim(game_id, payload)
-    #
-    #     # then should fail
-    #     self.assertEqual(resp.status_code, 200)
-    #     resp_object = resp.json()
-    #     self.assertEqual(resp_object.get("error", None), "missing required field")
+    @unittest.skip("this test crashes the system - a defect report should be written up on this")
+    def test3(self):
+        # given
+        # gameId = defined
+        # player = missing
+        # moveNumber = numberInHand
+        # moveFace = presentInHand
+        # claimNumber = defined
+        # claimFace = 1-6
+
+        game_id = self.game_id
+        payload = {"moveFace": self.moveFace, "moveNumber": self.moveNumber,
+                   "claimFace": self.moveFace, "claimNumber": self.moveNumber + 10}
+        # when
+        resp = self.api.claim(game_id, payload)
+
+        # then should fail
+        self.assertEqual(resp.status_code, 200)
+        resp_object = resp.json()
+        self.assertEqual(resp_object.get("error", None), "missing required field")
 
 
     def test4(self):
@@ -275,7 +275,6 @@ class Test02Claims(BaseTest):
         self.assertEqual(len(resp_object['document']['board']), 0)
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice)
-
 
     def test11(self):
         # given
