@@ -1,6 +1,6 @@
 #Liars Dice QA
 
-These tests were written to test the RESTful endpoints served up by node.js. These test are designed solely for the purpose of a "smoke" integration test. They do not test the logic of the game. 
+These tests were written to test the RESTful endpoints served up by node.js. They do not test all the logic of the code. Unit tests should be added to the project to get more thorough test coverage. 
 
 ##Continuous Integration
 Continuous integration tests have been set up in Jenkins. It polls the dev branch on github every 10 minutes and if it sees a change, it will check out the project, set up an environment to run on localhost:8080 and kick off the tests. The job will save the results of the test (*results.html*) as an archived item. 
