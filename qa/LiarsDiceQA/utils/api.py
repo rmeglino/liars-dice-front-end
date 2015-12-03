@@ -23,30 +23,28 @@ class LiarsDiceApi(object):
         def get_url(self,path):
             return self.base_url + path
 
+        def get_games_url(self, game_id=None):
+            if game_id is not None:
+                return self.get_url("/games/" + game_id)
+            return self.get_url("/games")
+
         def games(self, payload=None, game_id=None):
-            url = self.get_url("/games")
+            url = self.get_games_url(game_id=game_id)
             if payload is not None:
                 return self.post(url, payload)
-            if payload is None and game_id is None:
-                return self.get(url)
-            else:
-                resp_object = self.get(url).json()
-                for game in resp_object:
-                    if game['_id'] == game_id:
-                        return game
-                return None
+            return self.get(url)
+
+        def get_claim_url(self, game_id):
+            return self.get_url("/games/{id}/claim".format(id=game_id))
 
         def claim(self, game_id, payload, url_only=False):
-            url = self.get_url("/games/{id}/claim".format(id=game_id))
+            url = self.get_claim_url(game_id)
             if url_only:
                 return url
             return self.post(url, payload)
 
-        def challenge(self, game_id, payload, url_only=False):
-            url = self.get_url("/games/{id}/challenge".format(id=game_id))
-            if url_only:
-                return url
-            return self.post(url, payload)
+        def get_challenge_url(self, game_id):
+            return self.get_url("/games/{id}/challenge".format(id=game_id))
 
     instance = None
 

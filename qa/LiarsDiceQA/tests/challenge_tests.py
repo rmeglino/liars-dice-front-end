@@ -3,14 +3,13 @@ from collections import defaultdict
 from utils import LiarsDiceApi
 from base import BaseTest
 
-class Test03Challenge(BaseTest):
-    # test proper usage
-    def testClaim0(self):
-        # get the game
-        game = self.api.games(game_id=self.game_id)
 
-        #use the first player to make a claim
-        player0_hand = game['playerHands'][0]
+class Test03Challenge(BaseTest):
+
+    def setUp(self):
+        super(Test03Challenge, self).setUp()
+        self.game = self.api.games(game_id=self.game_id).json()
+        player0_hand = self.game['playerHands'][0]
         moveFace, moveNumber = self._get_highest_number(player0_hand)
         payload = {"player": 0, "moveFace": moveFace, "moveNumber": moveNumber,
                    "claimFace": moveFace, "claimNumber": moveNumber + 1}
@@ -19,11 +18,51 @@ class Test03Challenge(BaseTest):
         resp_object = resp.json()
         self.assertIsNone(resp_object.get("error", None))
 
-        #use the second player to challenge
+    def test0(self):
+        # given
+        # gameId = missing
+        # player = defined
+
         payload = {"player": 1}
-        resp = self.api.challenge(self.game_id, payload)
-        self.assertEqual(resp.status_code, 200)
+        game_id = ""
+
+        # when
+        url = self.api.get_challenge_url(game_id)
+        resp = self.api.post(url, payload)
+
+        # then should fail
+        self.assertEqual(resp.status_code, 404)
+
+    def test1(self):
+        # given
+        # gameId = defined
+        # player = missing
+
+        payload = {}
+        game_id = self.game_id
+
+        # when
+        url = self.api.get_challenge_url(game_id)
+        resp = self.api.post(url, payload)
+
+        # then should fail
+        self.assertEqual(resp.status_code, 404)
+
+    def test2(self):
+        # given
+        # gameId = defined
+        # player = defined
+
+        payload = {"player": 1}
+        game_id = self.game_id
+
+        # when
+        url = self.api.get_challenge_url(game_id)
+        resp = self.api.post(url, payload)
         resp_object = resp.json()
+
+        # then should pass
         self.assertTrue(isinstance(resp_object, bool))
+
 
 
