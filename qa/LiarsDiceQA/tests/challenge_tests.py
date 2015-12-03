@@ -18,7 +18,7 @@ class Test03Challenge(BaseTest):
         resp_object = resp.json()
         self.assertIsNone(resp_object.get("error", None))
 
-    def test0(self):
+    def test0_missing_gameId(self):
         # given
         # gameId = missing
         # player = defined
@@ -33,7 +33,7 @@ class Test03Challenge(BaseTest):
         # then should fail
         self.assertEqual(resp.status_code, 404)
 
-    def test1(self):
+    def test1_missing_player(self):
         # given
         # gameId = defined
         # player = missing
@@ -48,7 +48,7 @@ class Test03Challenge(BaseTest):
         # then should fail
         self.assertEqual(resp.status_code, 404)
 
-    def test2(self):
+    def test2_all_defined(self):
         # given
         # gameId = defined
         # player = defined

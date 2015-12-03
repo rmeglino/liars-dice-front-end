@@ -16,7 +16,7 @@ class Test02Claims(BaseTest):
         self.player0_hand = self.game['playerHands'][0]
         self.moveFace, self.moveNumber = self._get_highest_number(self.player0_hand)
 
-    def test0(self):
+    def test0_all_defined(self):
         # given
         # gameId = defined
         # player = defined
@@ -40,7 +40,7 @@ class Test02Claims(BaseTest):
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice - self.moveNumber)
 
-    def test1(self):
+    def test1_all_defined(self):
         # given
         # gameId = defined
         # player = defined
@@ -65,7 +65,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(len(hand), self.numDice - self.moveNumber)
 
 
-    def test2(self):
+    def test2_missing_gameId(self):
         # given
         # gameId = missing
         # player = defined
@@ -84,7 +84,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(resp.status_code, 404)
 
     @unittest.skip("this test crashes the system - a defect report should be written up on this")
-    def test3(self):
+    def test3_missing_player(self):
         # given
         # gameId = defined
         # player = missing
@@ -105,7 +105,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(resp_object.get("error", None), "missing required field")
 
 
-    def test4(self):
+    def test4_missing_moveNumber(self):
         # given
         # gameId = defined
         # player = defined
@@ -129,7 +129,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(len(hand), self.numDice)
 
 
-    def test5(self):
+    def test5_moveNumber_0(self):
         # given
         # gameId = defined
         # player = defined
@@ -153,7 +153,7 @@ class Test02Claims(BaseTest):
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice)
 
-    def test6(self):
+    def test6_moveNumber_100(self):
         # given
         # gameId = defined
         # player = defined
@@ -178,7 +178,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(len(hand), self.numDice)
 
 
-    def test7(self):
+    def test7_missing_moveFace(self):
         # given
         # gameId = defined
         # player = defined
@@ -202,7 +202,7 @@ class Test02Claims(BaseTest):
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice)
 
-    def test8(self):
+    def test8_missing_claimNumber(self):
         # given
         # gameId = defined
         # player = defined
@@ -226,7 +226,7 @@ class Test02Claims(BaseTest):
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice)
 
-    def test9(self):
+    def test9_missing_claimFace(self):
         # given
         # gameId = defined
         # player = defined
@@ -251,7 +251,7 @@ class Test02Claims(BaseTest):
         self.assertEqual(len(hand), self.numDice)
 
 
-    def test10(self):
+    def test10_moveFace_not_in_hand(self):
         # given
         # gameId = defined
         # player = defined
@@ -276,7 +276,7 @@ class Test02Claims(BaseTest):
         hand = resp_object['document']['playerHands'][0]
         self.assertEqual(len(hand), self.numDice)
 
-    def test11(self):
+    def test11_claimFace_greater_than_6(self):
         # given
         # gameId = defined
         # player = defined

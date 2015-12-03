@@ -17,4 +17,3 @@ I have also added the jenkins job configuration file in qa/jenkins-job-config.
 The tests were written in Python using Python's unittest framework. The qa portion of the project lives in the directory named 'qa'. The Python code lives in qa/LiarsDiceQA. The scripts directory holds the script that runs Jenkins. 
 
 Additional tests can be written and placed in qa/LiarsDiceQA/tests.  Once the tests are ready to be used, simply add an import statement to qa/LiarsDiceQA/test/\__init__.py and they will automatically be added to the test suite.
-
