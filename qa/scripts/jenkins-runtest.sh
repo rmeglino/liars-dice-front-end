@@ -23,6 +23,11 @@ fi
 python qa/LiarsDiceQA/TestRunner.py
 EXIT_STATUS=$?
 
+if [ `grep -c "class='failCase'" results.html` -gt 0 ]; then
+    echo "Failed test cases"
+    EXIT_STATUS=2
+fi
+
 kill $PID
 
 exit $EXIT_STATUS
